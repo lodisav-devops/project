@@ -1,0 +1,46 @@
+jenkins:
+  systemMessage: "<div style='border-radius:10px; text-align: center; padding:20px; font-size:160%; background-color: tomato;'>You configured Jenkins automatically by Jenkins Configuration as Code plugin</div><br>"
+  numExecutors: 2
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: ${JENKINS_ADMIN_ID}
+          password: ${JENKINS_ADMIN_PASSWORD}
+  authorizationStrategy:
+    globalMatrix:
+      permissions:
+        - "Overall/Administer:admin"
+        - "Overall/Read:authenticated"
+  markupFormatter:
+    rawHtml:
+      disableSyntaxHighlighting: false
+
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - basicSSHUserPrivateKey:
+              scope: GLOBAL
+              id: github_ssh
+              username: lodisav-devops
+              description: "SSH Github"
+              privateKeySource:
+                directEntry:
+                  privateKey: ${github_ssh}
+          - usernamePassword:
+              id: github_PAT
+              password: ${github_pat}
+              scope: GLOBAL
+              username: lodisav-devops
+
+security:
+  gitHostKeyVerificationConfiguration:
+    sshHostKeyVerificationStrategy: "noHostKeyVerificationStrategy"
+
+unclassified:
+  location:
+    url: ${JENKINS_URL}
+
+jobs:
+  - file: /var/jenkins_home/casc_configs/seedjob.groovy

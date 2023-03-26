@@ -1,0 +1,7 @@
+/create_cluster/docker-machine/env.sh
+/app/secrets/.dockerconfigjson
+/ci_cd/docker-machine/env.sh
+/ci_cd/docker-machine/.kube
+/ci_cd/docker-machine/ghcr_cred
+/ci_cd/docker-machine/ssh_key
+/ci_cd/jenkins/.env
