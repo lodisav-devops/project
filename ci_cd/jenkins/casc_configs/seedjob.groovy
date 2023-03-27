@@ -1,5 +1,5 @@
 folder('diplom') {
-    description('<div style="border-radius:10px; text-align: center; font-size:120%; padding:15px; background-color: powderblue;">Test kubectl</div>')
+    description('<div style="border-radius:10px; text-align: center; font-size:120%; padding:15px; background-color: powderblue;">Test kubectl and app</div>')
 }
 
 pipelineJob('diplom/kubectl_test') {
@@ -20,81 +20,40 @@ pipelineJob('diplom/kubectl_test') {
     }
 }
 
-pipelineJob('diplom/app') {
-    description('<div style="border-radius:10px; text-align: center; font-size:120%; padding:15px; background-color: powderblue;">Create pipeline app calculator</div>')
-    definition {
-        cpsScm {
-            scm {
-                git {
-                    remote {
-                        github('lodisav-devops/calculator', 'ssh')
-                        credentials('github_ssh')
+folder('app') {
+    description('<div style="border-radius:10px; text-align: center; font-size:120%; padding:15px; background-color: powderblue;">App calculator CI/CD</div>')
+}
+
+multibranchPipelineJob('app/build_or_deploy') {
+    branchSources {
+        branchSource {
+            source {
+                github {
+                    id('1234567') // IMPORTANT: use a constant and unique identifier
+                    credentialsId('github_PAT')
+                    repoOwner('lodisav-devops')
+                    repository('calculator')
+                    repositoryUrl('https://github.com/lodisav-devops/calculator')
+                    configuredByUrl(true)
+                    traits {
+                        gitHubBranchDiscovery {
+                            strategyId(3)
+                        }
+                        gitHubPullRequestDiscovery {
+                            strategyId(1)
+                        }
+                        headWildcardFilter  {
+                            includes("master PR-*")
+                            excludes("")
+                        }
                     }
-                    branch('master')
                 }
             }
+        }
+    }
+    factory {
+        workflowBranchProjectFactory {
             scriptPath('jenkins/Jenkinsfile')
         }
     }
 }
-
-// pipelineJob('infra/infra_destroy') {
-//     description('<div style="border-radius:10px; text-align: center; font-size:120%; padding:15px; background-color: powderblue;">Destroy infra pipeline</div>')
-//     definition {
-//         cpsScm {
-//             scm {
-//                 git {
-//                     remote {
-//                         github('DOS11-onl/example', 'ssh')
-//                         credentials('github_ssh')
-//                     }
-//                     branch('diplom')
-//                 }
-//             }
-//             scriptPath('diplom/terraform/infra/jenkinsfile_destroy')
-//         }
-//     }
-// }
-
-// folder('app') {
-//     description('<div style="border-radius:10px; text-align: center; font-size:120%; padding:15px; background-color: powderblue;">App CI/CD</div>')
-// }
-
-// multibranchPipelineJob('app/build') {
-//     branchSources {
-//         branchSource {
-//             source {
-//                 github {
-//                     id('1234567') // IMPORTANT: use a constant and unique identifier
-//                     credentialsId('github_PAT')
-//                     repoOwner('DOS11-onl')
-//                     repository('simple-java-maven-app')
-//                     repositoryUrl('https://github.com/DOS11-onl/simple-java-maven-app')
-//                     configuredByUrl(true)
-//                     traits {
-//                         gitHubBranchDiscovery {
-//                             strategyId(3)
-//                         }
-//                         gitHubPullRequestDiscovery {
-//                             strategyId(1)
-//                         }
-//                         headWildcardFilter  {
-//                             includes("master PR-*")
-//                             excludes("")
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//     }
-//     factory {
-//         workflowBranchProjectFactory {
-//             scriptPath('jenkins/Jenkinsfile')
-//         }
-//     }
-//     // orphanedItemStrategy {
-//     //     discardOldItems {
-//     //         numToKeep(5)
-//     //     }
-//     // }
-// }
