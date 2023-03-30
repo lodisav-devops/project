@@ -15,12 +15,16 @@ services:
       JENKINS_ADMIN_ID: ${JENKINS_ADMIN_ID}
       JENKINS_ADMIN_PASSWORD: ${JENKINS_ADMIN_PASSWORD}
       JENKINS_URL: ${JENKINS_URL}
+      JENKINS_ADMIN_ADDRESS: ${JENKINS_ADMIN_ADDRESS}
+      MAIL_USERNAME: ${MAIL_USERNAME}
+      JENKINS_MAILER_SMTP_HOST: ${JENKINS_MAILER_SMTP_HOST}
       DOCKER_HOST: tcp://jenkins-docker:2375
       DOCKER_CERT_PATH: ""
       DOCKER_TLS_VERIFY: ""
     secrets:
       - github_ssh
       - github_pat
+      - mail_pat
     volumes:
       - jenkins-data:/var/jenkins_home
       - /home/ubuntu/jenkins/casc_configs:/var/jenkins_home/casc_configs/
@@ -53,3 +57,5 @@ secrets:
     file: /home/ubuntu/.ssh/id_rsa
   github_pat:
     file: /home/ubuntu/.github/github_pat
+  mail_pat:
+    file: /home/ubuntu/.mail/mail_pat

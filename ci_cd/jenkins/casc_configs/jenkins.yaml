@@ -41,6 +41,16 @@ security:
 unclassified:
   location:
     url: ${JENKINS_URL}
+    adminAddress: ${JENKINS_ADMIN_ADDRESS}
+  mailer:
+    authentication:
+      password: ${mail_pat}
+      username: ${MAIL_USERNAME}
+    charset: "UTF-8"
+    smtpHost: ${JENKINS_MAILER_SMTP_HOST}
+    smtpPort: "465"
+    useSsl: true
+    useTls: false
 
 jobs:
   - file: /var/jenkins_home/casc_configs/seedjob.groovy

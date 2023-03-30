@@ -5,3 +5,4 @@
 /ci_cd/docker-machine/ghcr_cred
 /ci_cd/docker-machine/ssh_key
 /ci_cd/jenkins/.env
+/ci_cd/docker-machine/mail_cred

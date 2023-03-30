@@ -36,6 +36,10 @@ echo -e $grn"\nCoping PAT for github..."$rst
 docker-machine ssh "$DOCKER_MACHINE_NAME" mkdir .github
 docker-machine scp ./ghcr_cred/github_pat "$DOCKER_MACHINE_NAME":"/home/$MACHINE_USER/.github/github_pat"
 
+echo -e $grn"\nCoping PAT for mail.ru..."$rst
+docker-machine ssh "$DOCKER_MACHINE_NAME" mkdir .mail
+docker-machine scp ./mail_cred/mail_pat "$DOCKER_MACHINE_NAME":"/home/$MACHINE_USER/.mail/mail_pat"
+
 echo -e $grn"\nCoping .kube/config..."$rst
 docker-machine ssh "$DOCKER_MACHINE_NAME" mkdir .kube
 docker-machine scp ./.kube/config "$DOCKER_MACHINE_NAME":"/home/$MACHINE_USER/.kube/config"
@@ -43,4 +47,5 @@ docker-machine scp ./.kube/config "$DOCKER_MACHINE_NAME":"/home/$MACHINE_USER/.k
 echo -e $grn"\nActivating machine.."$rst
 echo -e $grn"Docker machine ip - $DOCKER_MACHINE_PUBLIC_IP"$rst
 echo -e $red"Run this command to configure your shell:"$rst
-echo -e $red"docker-machine use $DOCKER_MACHINE_NAME"$rst
+echo -e $red"docker-machine env $DOCKER_MACHINE_NAME"$rst
+echo -e $red"eval $(docker-machine env $DOCKER_MACHINE_NAME)"$rst
