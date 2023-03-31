@@ -111,6 +111,8 @@
   eval $(docker-machine env $DOCKER_MACHINE_NAME)
   ```
 
+  где $DOCKER_MACHINE_NAME - имя докер-машины в файле `env.sh` в директории `docker-machine`
+
 - Выполните команду `docker-compose up -d`
 
   Пример:
