@@ -38,5 +38,6 @@ sed -i "s/$DOCKER_HOST_IP/PRIVATE_IP/g" ./kind/env.sh
 sed -i "s/$DOCKER_HOST_EXTERNAL_IP/PUBLIC_IP/g" ./kind/env.sh
 
 # copy kube-config for jenkins machine
+mkdir ../ci_cd/docker-machine/.kube
 cp ~/.kube/config ../ci_cd/docker-machine/.kube/
 sed -i "s/$DOCKER_HOST_EXTERNAL_IP/$DOCKER_HOST_IP/g" ../ci_cd/docker-machine/.kube/config
