@@ -10,6 +10,8 @@ docker-machine create \
 	--amazonec2-instance-type t2.medium \
     --amazonec2-open-port 30100 \
 	--amazonec2-open-port 30200 \
+	--amazonec2-open-port 9200 \
+	--amazonec2-open-port 5601 \
 	--amazonec2-open-port 80 \
 	--amazonec2-open-port 8080 \
 	--amazonec2-open-port 6443 \
